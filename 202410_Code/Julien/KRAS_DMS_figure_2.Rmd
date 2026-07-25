@@ -1,0 +1,336 @@
+---
+title: "KRAS_DMS_figure_2"
+output: html_document
+date: "2025-07-10"
+---
+
+```{r setup, include=FALSE}
+
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(reshape2))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(data.table))
+suppressPackageStartupMessages(library(janitor))
+suppressPackageStartupMessages(library(magrittr))
+suppressPackageStartupMessages(library(ComplexHeatmap))
+suppressPackageStartupMessages(library(circlize))
+suppressPackageStartupMessages(library(ggrepel))
+suppressPackageStartupMessages(library(tidytext))
+suppressPackageStartupMessages(library(scales))
+suppressPackageStartupMessages(library(limma))
+suppressPackageStartupMessages(library(ggpubr))
+suppressPackageStartupMessages(library(corrplot))
+suppressPackageStartupMessages(library(RColorBrewer))
+
+options(datatable.fread.datatable = FALSE)
+
+
+```
+
+# --- Figure 2A: HCC827 KRAS G12D DMS screen heatmap --- #
+
+```{r}
+
+set.seed(1234)
+
+metadata <- fread("./datasets_publication/figure_1/kras_structure_annotation.csv") %>% # this remains unchanged from the WT annotation. I'm just changing G12 -> D12 to match the library
+  dplyr::arrange(pos) %>%
+  dplyr::mutate(wt_aa = ifelse(wt_aa == "G12", "D12", wt_aa))
+
+aa_properties <- data.frame(group = c("Small hydrophobic", "Small hydrophobic", "Small hydrophobic", "Small hydrophobic", "Small hydrophobic", "Special Cases", "Special Cases", "Special Cases", "Polar Uncharged", "Polar Uncharged", "Polar Uncharged", "Polar Uncharged", "Positive", "Positive", "Positive", "Negative", "Negative", "Large Hydrophobic", "Large Hydrophobic", "Large Hydrophobic"),
+                            aa = c("A", "I", "L", "M", "V", "C", "G", "P", "S", "T", "N", "Q", "K", "R", "H", "D", "E", "F", "W", "Y"))
+
+rownames(aa_properties) <- aa_properties$aa
+
+data <- readxl::read_excel("./datasets_publication/figure_2/Extended Data Table 3.xlsx", sheet = 2) %>%
+  janitor::clean_names() %>%
+  dplyr::mutate(wt_aa = paste(wt_aa, pos, sep = "")) %>%
+  dplyr::select(wt_aa, mut_aa, hcc827g12d_lfc) %>%
+  tidyr::pivot_wider(names_from = "wt_aa", values_from = "hcc827g12d_lfc") %>%
+  tibble::column_to_rownames("mut_aa") %>%
+  .[aa_properties$aa, metadata$wt_aa]
+
+metadata$average <- apply(data, 2, function(x) mean(x, na.rm = T))
+  
+min <- -3.5
+mid <- 0
+max <- 2.5
+a <- min + round(((mid-min) / 3), digits = 1)
+b <- mid - round(((mid-min) / 3), digits = 1)
+
+c <- mid + (round(((max-mid) / 3), digits = 1))
+d <- max - round(((max-mid) / 3), digits = 1)
+
+col_fun = colorRamp2(c(min, a, b, mid, c, d, max), c("#3B81C4","#81C2E7", "#DAF2F8", "#FFFFFF","#FF9286", "#EB001C", "#940017"))
+
+top_annotation = HeatmapAnnotation(domain_1 = metadata$domain1, 
+                                   domain_2 = metadata$domain2,
+                                   domain_3 = metadata$domain3,
+                                   average = anno_lines(metadata$average, height = unit(1, "cm")),
+                                   annotation_label = gt_render(c("**Lobe**",
+                                                                  "**Secondary structure**",
+                                                                  "**Functionnal motif**",
+                                                                  "**Average**"),
+                                                                gp = gpar(fontsize = 4)),
+                                   col = list(domain_1 = c("Effector lobe" = "#d46917",
+                                                             "Allosteric lobe" = "#18a2d9",
+                                                             "HVR" = "#ccbb39"),
+                                              domain_2 = c("B1" = "#bdbdbd", 
+                                                           "B2" = "#bdbdbd", 
+                                                           "B3" = "#bdbdbd", 
+                                                           "B4" = "#bdbdbd", 
+                                                           "B5" = "#bdbdbd",
+                                                           "B6" = "#bdbdbd", 
+                                                           "a1" = "#666666",
+                                                           "a2" = "#666666",
+                                                           "a3" = "#666666",
+                                                           "a4" = "#666666",
+                                                           "a5" = "#666666"),
+                                              domain_3 = c("G1/p-loop" = "red",
+                                                           "G2/Switch 1" = "blue",
+                                                           "G3/Switch 2" = "forestgreen",
+                                                           "G4" = "#916c46",
+                                                           "G5" = "black", 
+                                                           "CAAX" = "#ff8000")),
+                                   show_legend = c(TRUE, TRUE, TRUE, FALSE),
+                                   na_col = "white",
+                                   border = TRUE,
+                                   simple_anno_size = unit(2, "mm"),
+                                   show_annotation_name = c(TRUE, TRUE, TRUE, TRUE),
+                                   annotation_name_side = "left")
+  
+left_annotation = HeatmapAnnotation(properties = aa_properties$group,
+                                    annotation_label = gt_render(c("**properties**"),
+                                                                 gp = gpar(fontsize = 4)),
+                                    col = list(properties = c("Small hydrophobic" = "#D3BC25",
+                                                              "Special Cases" = "#54C8B8",
+                                                              "Polar Uncharged" = "#EAAE46",
+                                                              "Positive" = "#F48CBA", 
+                                                              "Negative" = "#87C74A",
+                                                              "Large Hydrophobic" = "#F89E95",
+                                                              "STOP" = "grey30")),
+                                    show_legend = c(TRUE),
+                                    na_col = "black",
+                                    which = "row",
+                                    border = TRUE,
+                                    simple_anno_size = unit(2, "mm"),
+                                    show_annotation_name = TRUE,
+                                    annotation_name_side = "bottom")
+
+labels <- c(3, 10, 12, 28, 34, 35, 54, 55, 60, 62, 81, 83, 103, 114, 119, 144, 155, 185, 188)
+position_labels <- columnAnnotation(foo = anno_mark(at = labels - 1, # -1 to adjust for the removal of M1
+                                                    labels = metadata[metadata$pos %in% labels, "wt_aa"],
+                                                    labels_rot = 90,
+                                                    link_width = unit(7.5, "mm"),
+                                                    which = "column",
+                                                    side = "bottom",
+                                                    labels_gp = gpar(fontsize = 7.5)))
+
+data <- data[aa_properties$aa,]
+
+draw(Heatmap(as.matrix(data), 
+             col = col_fun,
+             heatmap_legend_param = list(title = "LFC", at = c(min, 0, max), border = "black"),
+             row_names_gp = gpar(fontsize = 5),
+             column_names_gp = gpar(fontsize = 3.3),
+             top_annotation = top_annotation,
+             bottom_annotation = position_labels,
+             left_annotation = left_annotation,
+             cluster_rows = F,
+             cluster_columns = F,
+             column_km = NULL,
+             row_gap = unit(0.75, "mm"),
+             na_col = "grey50",
+             show_row_names = TRUE,
+             show_column_names = FALSE,
+             row_names_side = "left",
+             row_dend_reorder = TRUE,
+             column_dend_reorder = TRUE,
+             show_row_dend = TRUE,
+             width = unit(15, "cm"),
+             height = unit(5, "cm"),
+             border_gp = gpar(col = "black", lty = 1),
+             rect_gp = gpar(col = "white", lwd = 0.05)))
+
+```
+# --- Figure 2B: HCC827 KRAS G12D DMS screen / stats to map onto crystal structure --- #
+
+```{r}
+
+data <- readxl::read_excel("./datasets_publication/figure_2/Extended Data Table 3.xlsx", sheet = 2) %>%
+  janitor::clean_names() %>%
+  dplyr::mutate(wt_aa = paste(wt_aa, pos, sep = "")) %>%
+  dplyr::select(wt_aa, mut_aa, hcc827g12d_lfc)
+
+cutoff <- data %>%
+  dplyr::filter(wt_aa == "C185") %>%
+  dplyr::slice_min(n = 1, order_by = hcc827g12d_lfc)
+
+
+stats_to_map <- data %>%
+  dplyr::group_by(wt_aa) %>%
+  dplyr::summarise(mean = mean(hcc827g12d_lfc, na.rm = T),
+                   max = max(hcc827g12d_lfc, na.rm = T),
+                   min = min(hcc827g12d_lfc, na.rm = T),
+                   n_above_cutoff = sum(hcc827g12d_lfc >= cutoff$hcc827g12d_lfc, na.rm = TRUE))
+
+write_csv(stats_to_map, "./datasets_publication/figure_2/HCC827_structural_mapping_stats.csv")
+
+# the rest of the mapping is done using UCSF chimera with the define/render by attribute embedded functions. The color of the residue being proportional to the max LFC at that residue and the worm size to the number of mutation at that residue scoring > that the inactivation cutoff (~0.84)
+
+
+```
+
+# --- Figure 2C: comparison of in vitro and in silico KRAS G12D DMS screens --- #
+
+```{r}
+
+metadata <- fread("./datasets_publication/figure_2/residues_metadata.csv") %>%
+  dplyr::mutate(interaction = janitor::make_clean_names(interaction, allow_dupes = TRUE),
+         structure = janitor::make_clean_names(structure, allow_dupes = TRUE)
+         ) %>%
+  dplyr::mutate(wt_aa = ifelse(wt_aa == "G12", "D12", wt_aa))
+
+data <- readxl::read_excel("./datasets_publication/figure_2/Extended Data Table 3.xlsx", sheet = 2) %>%
+  janitor::clean_names() %>%
+  dplyr::mutate(wt_aa = paste(wt_aa, pos, sep = "")) %>%
+  dplyr::select(wt_aa, mut_aa, hcc827g12d_lfc, dd_g) %>%
+  dplyr::group_by(wt_aa) %>%
+  dplyr::summarise(avg_hcc827g12d_lfc = mean(hcc827g12d_lfc, na.rm = TRUE),
+                   avg_dd_g = mean(dd_g, na.rm = TRUE)) %>%
+  dplyr::ungroup() %>%
+  dplyr::filter(!is.na(avg_hcc827g12d_lfc) & !is.na(avg_dd_g)) %>%
+  dplyr::inner_join(metadata, by = "wt_aa") %>%
+  dplyr::inner_join(fread("./datasets_publication/figure_2/HCC827_structural_mapping_stats.csv") %>% 
+                      dplyr::select(wt_aa, n_above_cutoff), by = "wt_aa")
+
+color_structure <- c("core_residue" = "#1B9E77",
+                     "surface_residue" = "#9B58A5",
+                     "hvr" = "#ccbb39")
+
+color_interaction <- c("no_interaction" = "#d6d6d6",
+                       "cofactor_binding" = "#f77f00",
+                       "effector_binding" = "#8ecae6")
+
+
+ggplot(data = data, aes(x = avg_hcc827g12d_lfc, y = avg_dd_g, size = n_above_cutoff)) + #
+  #geom_vline(xintercept = cutoffs$Cutoff, linetype = "dashed", color = "black", size = 0.25) +
+  geom_point(data = data %>% dplyr::filter(interaction == "no_interaction"), aes(fill = interaction, color = structure), shape = 21, stroke = 1) +
+  geom_point(data = data %>% dplyr::filter(interaction != "no_interaction"), aes(fill = interaction, color = structure), shape = 21, stroke = 1) +
+  ylab(expression(paste("Average positional free energy change ",Delta*Delta,G))) +
+  #xlab(bquote(Average~Log[2]~FC)) +
+  xlab("Average positional inactivating potential") +
+  theme_test() +
+  theme(axis.ticks = element_line(colour = "black", size = 0.2),
+        axis.text.x = element_text(size = 7, color = "black"),
+        axis.text.y = element_text(size = 7, color = "black"),
+        aspect.ratio = 1
+        ) +
+  geom_text_repel(data = data %>% dplyr::filter(avg_dd_g > 7.5 | avg_hcc827g12d_lfc > 0.5) %>% 
+                    dplyr::arrange(-avg_dd_g, -avg_hcc827g12d_lfc) %>%
+                    dplyr::slice(1:30),
+                  aes(label = wt_aa),
+                  size = 2, 
+                  max.overlaps = 100, 
+                  segment.size = 0,          
+                  min.segment.length = 0,
+                  force = 10) +
+  scale_fill_manual(values = color_interaction, name = "Interaction") +
+  scale_color_manual(values = color_structure, name = "Structure") +
+  scale_size_continuous(range = c(0.2, 4), name = "# Inactivating mutation/residue")
+
+
+```
+
+# --- Figure 2E: CHX chase assay results --- #
+
+```{r}
+
+# the data ahs already been aggregated across biological replicates and normalized to 1) loading control (vinculin) within each replicate and for each mutant and 2) to the baseline (0h) for each mutant in each replicate
+
+data <- fread("./datasets_publication/figure_2/G12D_CHX_369h_degradation.csv") %>%
+  dplyr::group_by(mutant, timepoint) %>%
+  dplyr::summarise(intensity = mean(intensity)) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(intensity = log2(intensity)) %>%
+  tidyr:::pivot_wider(names_from = "timepoint", values_from = "intensity") %>%
+  dplyr::select(-`0h`) %>%
+  tibble::column_to_rownames("mutant")
+
+metadata <- data %>%
+  tibble::rownames_to_column("mutant") %>%
+  dplyr::select(mutant) %>%
+  dplyr::mutate(wt_aa = sub(".*/", "", mutant),
+                wt_aa = substr(wt_aa, 1, nchar(wt_aa) - 1)) %>%
+  dplyr::inner_join(fread("./datasets_publication/figure_2/residues_metadata.csv") %>%
+                      dplyr::mutate(interaction = janitor::make_clean_names(interaction, allow_dupes = TRUE),
+                             structure = janitor::make_clean_names(structure, allow_dupes = TRUE)), by = "wt_aa") %>%
+  tibble::column_to_rownames("mutant")
+
+unique(metadata$structure)
+
+left_annotation = HeatmapAnnotation(localization = metadata$structure,
+                                    annotation_label = gt_render(c("**Localization**")),
+                                    col = list(localization = c("surface_residue" = "#1B9E77", "core_residue" = "#9B58A5")),
+                                    na_col = "white",
+                                    which = "row",
+                                    border = TRUE,
+                                    show_legend = TRUE,
+                                    show_annotation_name = FALSE)
+
+
+col <- rev(brewer.pal(9, 'Blues'))
+breaks <- seq(-5,0, length.out = 9)
+
+
+Heatmap(as.matrix(data), 
+                   col = colorRamp2(breaks, col),
+                   heatmap_legend_param = list(title = bquote(Log[2]~FC), at = c(-5,-2.5,0), border = "black"),
+                   row_names_gp = gpar(fontsize = 7),
+                   column_names_gp = gpar(fontsize = 10),
+                   left_annotation = left_annotation,
+                   cluster_rows = T,
+                   cluster_columns = F,
+                   row_km = 4,
+                   column_km = NULL,
+                   column_km_repeats = NULL,
+                   row_km_repeats = 1000,
+                   row_gap = unit(0.75, "mm"),
+                   clustering_distance_rows = "euclidean",
+                   clustering_method_rows = "complete",
+                   clustering_distance_columns = NULL,
+                   clustering_method_columns = NULL,
+                   na_col = "grey50",
+                   row_names_side = "right",
+                   show_row_names = TRUE,
+                   show_column_names = TRUE,
+                   row_dend_reorder = TRUE,
+                   column_dend_reorder = TRUE,
+                   show_row_dend = T,
+                   show_column_dend = F,
+                   width = unit(4, "cm"),
+                   height = unit(10, "cm"),
+                   border_gp = gpar(col = "black", lty = 1),
+                   rect_gp = gpar(col = "#d1d1d1", lwd = 0.15)
+                   )
+
+```
+
+
+
+
+
+
+```{r}
+
+
+data <- readxl::read_excel("/Users/juliendilly/Partners HealthCare Dropbox/Julien Dilly/KRAS DMS paper/Code/202410_Code/Julien/datasets_publication/figure_2/CHX degradation assays 16h-24h-48h_DO_NOT_EDIT.xlsx") %>%
+  tidyr::separate(CHX_time, sep = "_", into = c("mutant", "replicate")) %>%
+  dplyr::mutate(mutant = ifelse(mutant != "G12D", paste("G12D/", mutant, sep = ""), mutant)) %>%
+  tidyr::pivot_longer(cols = -c("mutant", "replicate"), names_to = "timepoint", values_to = "intensity") %>%
+  dplyr::filter(!timepoint == "16h")
+
+data %>% write_csv("/Users/juliendilly/Partners HealthCare Dropbox/Julien Dilly/KRAS DMS paper/Code/202410_Code/Julien/datasets_publication/figure_2/G12D_CHX_2448h_degradation.csv")
+
+```
+

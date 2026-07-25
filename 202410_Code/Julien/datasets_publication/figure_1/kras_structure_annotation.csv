@@ -1,0 +1,188 @@
+wt_aa,pos,domain1,domain2,domain3
+T2,2,Effector lobe,B1,
+E3,3,Effector lobe,B1,
+Y4,4,Effector lobe,B1,
+K5,5,Effector lobe,B1,
+L6,6,Effector lobe,B1,
+V7,7,Effector lobe,B1,
+V8,8,Effector lobe,B1,
+V9,9,Effector lobe,B1,
+G10,10,Effector lobe,,G1/p-loop
+A11,11,Effector lobe,,G1/p-loop
+G12,12,Effector lobe,,G1/p-loop
+G13,13,Effector lobe,,G1/p-loop
+V14,14,Effector lobe,,G1/p-loop
+G15,15,Effector lobe,,G1/p-loop
+K16,16,Effector lobe,a1,G1/p-loop
+S17,17,Effector lobe,a1,
+A18,18,Effector lobe,a1,
+L19,19,Effector lobe,a1,
+T20,20,Effector lobe,a1,
+I21,21,Effector lobe,a1,
+Q22,22,Effector lobe,a1,
+L23,23,Effector lobe,a1,
+I24,24,Effector lobe,a1,
+Q25,25,Effector lobe,,
+N26,26,Effector lobe,,
+H27,27,Effector lobe,,
+F28,28,Effector lobe,,G2/Switch 1
+V29,29,Effector lobe,,G2/Switch 1
+D30,30,Effector lobe,,G2/Switch 1
+E31,31,Effector lobe,,G2/Switch 1
+Y32,32,Effector lobe,,G2/Switch 1
+D33,33,Effector lobe,,G2/Switch 1
+P34,34,Effector lobe,,G2/Switch 1
+T35,35,Effector lobe,,G2/Switch 1
+I36,36,Effector lobe,,G2/Switch 1
+E37,37,Effector lobe,,G2/Switch 1
+D38,38,Effector lobe,B2,G2/Switch 1
+S39,39,Effector lobe,B2,
+Y40,40,Effector lobe,B2,
+R41,41,Effector lobe,B2,
+K42,42,Effector lobe,B2,
+Q43,43,Effector lobe,B2,
+V44,44,Effector lobe,B2,
+V45,45,Effector lobe,B2,
+I46,46,Effector lobe,B2,
+D47,47,Effector lobe,,
+G48,48,Effector lobe,,
+E49,49,Effector lobe,B3,
+T50,50,Effector lobe,B3,
+C51,51,Effector lobe,B3,
+L52,52,Effector lobe,B3,
+L53,53,Effector lobe,B3,
+D54,54,Effector lobe,B3,
+I55,55,Effector lobe,B3,
+L56,56,Effector lobe,B3,
+D57,57,Effector lobe,B3,
+T58,58,Effector lobe,,
+A59,59,Effector lobe,,G3/Switch 2
+G60,60,Effector lobe,,G3/Switch 2
+Q61,61,Effector lobe,,G3/Switch 2
+E62,62,Effector lobe,,G3/Switch 2
+E63,63,Effector lobe,,G3/Switch 2
+Y64,64,Effector lobe,,G3/Switch 2
+S65,65,Effector lobe,,G3/Switch 2
+A66,66,Effector lobe,a2,G3/Switch 2
+M67,67,Effector lobe,a2,G3/Switch 2
+R68,68,Effector lobe,a2,G3/Switch 2
+D69,69,Effector lobe,a2,G3/Switch 2
+Q70,70,Effector lobe,a2,G3/Switch 2
+Y71,71,Effector lobe,a2,G3/Switch 2
+M72,72,Effector lobe,a2,G3/Switch 2
+R73,73,Effector lobe,a2,G3/Switch 2
+T74,74,Effector lobe,a2,G3/Switch 2
+G75,75,Effector lobe,,G3/Switch 2
+E76,76,Effector lobe,,
+G77,77,Effector lobe,B4,
+F78,78,Effector lobe,B4,
+L79,79,Effector lobe,B4,
+C80,80,Effector lobe,B4,
+V81,81,Effector lobe,B4,
+F82,82,Effector lobe,B4,
+A83,83,Effector lobe,B4,
+I84,84,Effector lobe,,
+N85,85,Effector lobe,,
+N86,86,Effector lobe,,
+T87,87,Allosteric lobe,a3,
+K88,88,Allosteric lobe,a3,
+S89,89,Allosteric lobe,a3,
+F90,90,Allosteric lobe,a3,
+E91,91,Allosteric lobe,a3,
+D92,92,Allosteric lobe,a3,
+I93,93,Allosteric lobe,a3,
+H94,94,Allosteric lobe,a3,
+H95,95,Allosteric lobe,a3,
+Y96,96,Allosteric lobe,a3,
+R97,97,Allosteric lobe,a3,
+E98,98,Allosteric lobe,a3,
+Q99,99,Allosteric lobe,a3,
+I100,100,Allosteric lobe,a3,
+K101,101,Allosteric lobe,a3,
+R102,102,Allosteric lobe,a3,
+V103,103,Allosteric lobe,a3,
+K104,104,Allosteric lobe,a3,
+D105,105,Allosteric lobe,,
+S106,106,Allosteric lobe,,
+E107,107,Allosteric lobe,,
+D108,108,Allosteric lobe,,
+V109,109,Allosteric lobe,,
+P110,110,Allosteric lobe,,
+M111,111,Allosteric lobe,B5,
+V112,112,Allosteric lobe,B5,
+L113,113,Allosteric lobe,B5,
+V114,114,Allosteric lobe,B5,
+G115,115,Allosteric lobe,B5,
+N116,116,Allosteric lobe,B5,G4
+K117,117,Allosteric lobe,,G4
+C118,118,Allosteric lobe,,G4
+D119,119,Allosteric lobe,,G4
+L120,120,Allosteric lobe,,
+P121,121,Allosteric lobe,,
+S122,122,Allosteric lobe,,
+R123,123,Allosteric lobe,,
+T124,124,Allosteric lobe,,
+V125,125,Allosteric lobe,,
+D126,126,Allosteric lobe,,
+T127,127,Allosteric lobe,a4,
+K128,128,Allosteric lobe,a4,
+Q129,129,Allosteric lobe,a4,
+A130,130,Allosteric lobe,a4,
+Q131,131,Allosteric lobe,a4,
+D132,132,Allosteric lobe,a4,
+L133,133,Allosteric lobe,a4,
+A134,134,Allosteric lobe,a4,
+R135,135,Allosteric lobe,a4,
+S136,136,Allosteric lobe,a4,
+Y137,137,Allosteric lobe,a4,
+G138,138,Allosteric lobe,,
+I139,139,Allosteric lobe,,
+P140,140,Allosteric lobe,B6,
+F141,141,Allosteric lobe,B6,
+I142,142,Allosteric lobe,B6,
+E143,143,Allosteric lobe,B6,
+T144,144,Allosteric lobe,B6,G5
+S145,145,Allosteric lobe,,G5
+A146,146,Allosteric lobe,,G5
+K147,147,Allosteric lobe,,G5
+T148,148,Allosteric lobe,,
+R149,149,Allosteric lobe,,
+Q150,150,Allosteric lobe,,
+G151,151,Allosteric lobe,,
+V152,152,Allosteric lobe,a5,
+D153,153,Allosteric lobe,a5,
+D154,154,Allosteric lobe,a5,
+A155,155,Allosteric lobe,a5,
+F156,156,Allosteric lobe,a5,
+Y157,157,Allosteric lobe,a5,
+T158,158,Allosteric lobe,a5,
+L159,159,Allosteric lobe,a5,
+V160,160,Allosteric lobe,a5,
+R161,161,Allosteric lobe,a5,
+E162,162,Allosteric lobe,a5,
+I163,163,Allosteric lobe,a5,
+R164,164,Allosteric lobe,a5,
+K165,165,Allosteric lobe,a5,
+H166,166,Allosteric lobe,a5,
+K167,167,HVR,,
+E168,168,HVR,,
+K169,169,HVR,,
+M170,170,HVR,,
+S171,171,HVR,,
+K172,172,HVR,,
+D173,173,HVR,,
+G174,174,HVR,,
+K175,175,HVR,,
+K176,176,HVR,,
+K177,177,HVR,,
+K178,178,HVR,,
+K179,179,HVR,,
+K180,180,HVR,,
+S181,181,HVR,,
+K182,182,HVR,,
+T183,183,HVR,,
+K184,184,HVR,,
+C185,185,HVR,,CAAX
+V186,186,HVR,,CAAX
+I187,187,HVR,,CAAX
+M188,188,HVR,,CAAX

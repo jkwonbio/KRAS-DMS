@@ -1,0 +1,278 @@
+---
+title: "1. KRAS WT - HA1E"
+output: html_document
+date: "2022-11-07"
+---
+
+
+
+```{r setup, include=FALSE}
+
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(reshape2))
+suppressPackageStartupMessages(require(dplyr))
+suppressPackageStartupMessages(library(data.table))
+suppressPackageStartupMessages(library(janitor))
+suppressPackageStartupMessages(library(magrittr))
+suppressPackageStartupMessages(library(ComplexHeatmap))
+suppressPackageStartupMessages(library(circlize))
+suppressPackageStartupMessages(library(ggrepel))
+suppressPackageStartupMessages(library(tidytext))
+suppressPackageStartupMessages(library(scales))
+suppressPackageStartupMessages(library(ggpubr))
+suppressPackageStartupMessages(library(corrplot))
+suppressPackageStartupMessages(library(RColorBrewer))
+
+options(datatable.fread.datatable = FALSE)
+
+
+```
+
+# --- HA1E KRAS WT DMS screen plotting --- #
+
+```{r}
+
+order <- fread("./Datasets/metadata/colnames_rownames_wt.csv") %>%
+  tibble::column_to_rownames("amino_acid") %>%
+  dplyr::filter(!row.names(.) == "X") # removed the nonsense mut - can include later in the processing upstream if necessary
+
+data <- fread("./Datasets/WT/HA1E-KRAS-WT-limma-lfc.csv") %>%
+  dplyr::select(Codon, MUT_aa, LFC_d7_Low_d0) %>% # comparison used for the paper
+  reshape2::dcast(MUT_aa ~ Codon, value.var = "LFC_d7_Low_d0") %>%
+  tibble::column_to_rownames("MUT_aa") %>%
+  .[rownames(order), colnames(order)]
+
+annotation <- fread("./Datasets/metadata/domain_annotation_wt.csv") %>%
+  dplyr::arrange(match(codon, colnames(data))) %>%
+  dplyr::mutate(average = colMeans(data, na.rm = T),
+                across(c(domain1, domain2, domain3, RAF1_binding, SOS1_binding, PI3Kg_binding, p120GAP_binding), ~ ifelse(.x == "", "None", .x)))
+
+  
+# --- Residues to label on the heatmap --- #
+
+labels <- which(colnames(data) %in% c("G12","G13","V14","L19","L23","P34","A59","Q61","R68","A83","N116","K117","S145","A146","S181", "C185")) # residues of interest to label 
+
+position_labels <- columnAnnotation(foo = anno_mark(at = labels, 
+                                                    labels = colnames(data[labels]),
+                                                    labels_rot = 90,
+                                                    link_width = unit(3, "mm"),
+                                                    which = "column",
+                                                    side = "bottom",
+                                                    labels_gp = gpar(fontsize = 7.5)))
+
+# --- color scale --- #
+
+min <- -3
+mid <- 0
+max <- 3
+score <- "Log2 FC"
+
+a <- min + round(((mid-min) / 3), digits = 1)
+b <- mid - round(((mid-min) / 3), digits = 1)
+c <- mid + (round(((max-mid) / 3), digits = 1))
+d <- max - round(((max-mid) / 3), digits = 1)
+
+col_fun = colorRamp2(c(min, a, b, mid, c, d, max), c("#3B81C4","#81C2E7", "#DAF2F8", "#FFFFFF","#FF9286", "#EB001C", "#940017"))
+
+top_annotation = HeatmapAnnotation(
+  Domain_1 = annotation$domain1, 
+  Domain_2 = annotation$domain2,
+  Domain_3 = annotation$domain3,
+  RAF1_binding = annotation$RAF1_binding,
+  SOS1_binding = annotation$SOS1_binding,
+  PI3Kg_binding = annotation$PI3Kg_binding,
+  GAP_binding = annotation$p120GAP_binding,
+  Average = anno_lines(annotation$average, height = unit(1, "cm")),
+  annotation_label = gt_render(c("**Lobe**",
+                                 "**Secondary structure**",
+                                 "**Functionnal motif**",
+                                 "**RAF1 binding**",
+                                 "**SOS1 binding**",
+                                 "**PI3Kg binding**",
+                                 "**GAP binding**",
+                                 "**Average**"),
+                               gp = gpar(fontsize = 6)),
+  col = list(Domain_1 = c("Effector lobe" = "#d46917",
+                          "Allosteric lobe" = "#18a2d9",
+                          "HVR" = "#ccbb39",
+                          "None" = "white"),
+             Domain_2 = c("B1" = "#bdbdbd", 
+                          "B2" = "#bdbdbd", 
+                          "B3" = "#bdbdbd", 
+                          "B4" = "#bdbdbd", 
+                          "B5" = "#bdbdbd", 
+                          "B6" = "#bdbdbd", 
+                          "a1" = "#666666",
+                          "a2" = "#666666",
+                          "a3" = "#666666",
+                          "a4" = "#666666",
+                          "a5" = "#666666",
+                          "None" = "white"),
+             Domain_3 = c("G1/p-loop" = "red",
+                          "G2/Switch 1" = "blue",
+                          "G3/Switch 2" = "forestgreen",
+                          "G4" = "#916c46",
+                          "G5" = "black", 
+                          "CAAX" = "#ff8000",
+                          "None" = "white"),
+             RAF1_binding = c("Yes" = "black", "None" = "white"),
+             SOS1_binding = c("Yes" = "black", "None" = "white"),
+             PI3Kg_binding = c("Yes" = "black", "None" = "white"),
+             GAP_binding = c("Yes" = "black", "None" = "white")), 
+  show_legend = c(T,T,T,T,F,F,F,F),
+  na_col = "white",
+  gap = unit(0, "mm"),
+  annotation_legend_param = list(border = "black"),
+  border = TRUE,
+  simple_anno_size = unit(3, "mm"),
+  show_annotation_name = c(T,T,T,T,T,T,T,T),
+  annotation_name_side = "left")
+  
+  pdf(file = "./Plots/HA1E_KRAS_WT_heatmap.pdf", width = 10, height = 6)
+
+  draw(Heatmap(as.matrix(data), 
+               col = col_fun,
+               heatmap_legend_param = list(title = "LFC", at = c(min, 0, max), border = "black"),
+               row_names_gp = gpar(fontsize = 5),
+               column_names_gp = gpar(fontsize = 3.3),
+               top_annotation = top_annotation,
+               bottom_annotation = position_labels,
+               cluster_rows = F,
+               cluster_columns = F,
+               column_km = NULL,
+               row_gap = unit(0.75, "mm"),
+               na_col = "grey50",
+               show_row_names = TRUE,
+               show_column_names = FALSE,
+               row_names_side = "left",
+               row_dend_reorder = TRUE,
+               column_dend_reorder = TRUE,
+               show_row_dend = TRUE,
+               width = unit(15, "cm"),
+               height = unit(5, "cm"),
+               border_gp = gpar(col = "black", lty = 1),
+               rect_gp = gpar(col = "white", lwd = 0.05)))
+  
+  dev.off()
+  
+
+```
+
+
+# --- HCC827 KRAS G12D DMS screen plotting --- #
+
+```{r}
+
+order <- fread("./Datasets/metadata/colnames_rownames_g12d.csv") %>%
+  tibble::column_to_rownames("amino_acid") %>%
+  dplyr::filter(!row.names(.) == "X") # removed the nonsense mut - can include later in the processing upstream if necessary
+
+data <- fread("./Datasets/G12D/HCC827-KRAS-G12D-limma-lfc.csv") %>%
+  dplyr::select(Codon, MUT_aa, LFC_Day12_Day0) %>% # comparison used for the paper
+  reshape2::dcast(MUT_aa ~ Codon, value.var = "LFC_Day12_Day0") %>%
+  tibble::column_to_rownames("MUT_aa") %>%
+  .[rownames(order), colnames(order)]
+
+annotation <- fread("./Datasets/metadata/domain_annotation_g12d.csv") %>%
+  dplyr::arrange(match(codon, colnames(data))) %>%
+  dplyr::mutate(average = colMeans(data, na.rm = T),
+                across(c(domain1, domain2, domain3), ~ ifelse(.x == "", "None", .x)))
+
+  
+# --- Residues to label on the heatmap --- #
+
+labels <- which(colnames(data) %in% c("E3","G10","D12","F28","P34","T35","D54","I55","G60","E62","V81","A83","V103","V114","D119","T144","A155","C185","M188")) # residues of interest to label 
+
+position_labels <- columnAnnotation(foo = anno_mark(at = labels, 
+                                                    labels = colnames(data[labels]),
+                                                    labels_rot = 90,
+                                                    link_width = unit(3, "mm"),
+                                                    which = "column",
+                                                    side = "bottom",
+                                                    labels_gp = gpar(fontsize = 7.5)))
+
+# --- color scale --- #
+
+min <- -4
+mid <- 0
+max <- 4
+score <- "Log2 FC"
+
+a <- min + round(((mid-min) / 3), digits = 1)
+b <- mid - round(((mid-min) / 3), digits = 1)
+c <- mid + (round(((max-mid) / 3), digits = 1))
+d <- max - round(((max-mid) / 3), digits = 1)
+
+col_fun = colorRamp2(c(min, a, b, mid, c, d, max), c("#3B81C4","#81C2E7", "#DAF2F8", "#FFFFFF","#FF9286", "#EB001C", "#940017"))
+
+top_annotation = HeatmapAnnotation(
+  Domain_1 = annotation$domain1, 
+  Domain_2 = annotation$domain2,
+  Domain_3 = annotation$domain3,
+  Average = anno_lines(annotation$average, height = unit(1, "cm")),
+  annotation_label = gt_render(c("**Lobe**",
+                                 "**Secondary structure**",
+                                 "**Functionnal motif**",
+                                 "**Average**"),
+                               gp = gpar(fontsize = 6)),
+  col = list(Domain_1 = c("Effector lobe" = "#d46917",
+                          "Allosteric lobe" = "#18a2d9",
+                          "HVR" = "#ccbb39",
+                          "None" = "white"),
+             Domain_2 = c("B1" = "#bdbdbd", 
+                          "B2" = "#bdbdbd", 
+                          "B3" = "#bdbdbd", 
+                          "B4" = "#bdbdbd", 
+                          "B5" = "#bdbdbd", 
+                          "B6" = "#bdbdbd", 
+                          "a1" = "#666666",
+                          "a2" = "#666666",
+                          "a3" = "#666666",
+                          "a4" = "#666666",
+                          "a5" = "#666666",
+                          "None" = "white"),
+             Domain_3 = c("G1/p-loop" = "red",
+                          "G2/Switch 1" = "blue",
+                          "G3/Switch 2" = "forestgreen",
+                          "G4" = "#916c46",
+                          "G5" = "black", 
+                          "CAAX" = "#ff8000",
+                          "None" = "white")), 
+  show_legend = c(T,T,T,T),
+  na_col = "white",
+  gap = unit(0, "mm"),
+  annotation_legend_param = list(border = "black"),
+  border = TRUE,
+  simple_anno_size = unit(3, "mm"),
+  show_annotation_name = c(T,T,T,T),
+  annotation_name_side = "left")
+  
+  pdf(file = "./Plots/HCC827_KRAS_G12D_heatmap.pdf", width = 10, height = 6)
+
+  draw(Heatmap(as.matrix(data), 
+               col = col_fun,
+               heatmap_legend_param = list(title = "LFC", at = c(min, 0, max), border = "black"),
+               row_names_gp = gpar(fontsize = 5),
+               column_names_gp = gpar(fontsize = 3.3),
+               top_annotation = top_annotation,
+               bottom_annotation = position_labels,
+               cluster_rows = F,
+               cluster_columns = F,
+               column_km = NULL,
+               row_gap = unit(0.75, "mm"),
+               na_col = "grey50",
+               show_row_names = TRUE,
+               show_column_names = FALSE,
+               row_names_side = "left",
+               row_dend_reorder = TRUE,
+               column_dend_reorder = TRUE,
+               show_row_dend = TRUE,
+               width = unit(15, "cm"),
+               height = unit(5, "cm"),
+               border_gp = gpar(col = "black", lty = 1),
+               rect_gp = gpar(col = "white", lwd = 0.05)))
+  
+  dev.off()
+  
+
+```

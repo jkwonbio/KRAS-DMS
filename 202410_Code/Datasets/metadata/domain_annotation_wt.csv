@@ -1,0 +1,188 @@
+codon,domain1,domain2,domain3,domain4,domain5,domain6,domain7,ASA,p120GAP_binding,PI3Kg_binding,RAF1_binding,SOS1_binding
+T2,Effector lobe,B1,,,,,,78.6,,,,
+E3,Effector lobe,B1,,,,,,78.12,,,,
+Y4,Effector lobe,B1,,,,,,10.18,,,,
+K5,Effector lobe,B1,,p1 pocket,,S1/2 pocket,Ubiquitination,25.38,,,,
+L6,Effector lobe,B1,,p1 pocket,,S1/2 pocket,,0.74,,,,
+V7,Effector lobe,B1,,p1 pocket,,S1/2 pocket,,1.99,,,,
+V8,Effector lobe,B1,,,,,,0,,,,
+V9,Effector lobe,B1,,,,,,6.64,,,,
+G10,Effector lobe,,G1/p-loop,,,,,0.15,,,,
+A11,Effector lobe,,G1/p-loop,,,,,15.92,,,,
+G12,Effector lobe,,G1/p-loop,,,,,44.26,Yes,,,
+G13,Effector lobe,,G1/p-loop,,,,,29.89,Yes,,,
+V14,Effector lobe,,G1/p-loop,,,,,0.17,,,,
+G15,Effector lobe,,G1/p-loop,,,,,11.38,,,,
+K16,Effector lobe,a1,G1/p-loop,,S2 pocket,,,13.05,,,,
+S17,Effector lobe,a1,,,,,,26.11,,,,Yes
+A18,Effector lobe,a1,,,,,,17.38,,,,Yes
+L19,Effector lobe,a1,,,,,,0.5,,,,
+T20,Effector lobe,a1,,,,,,0,,,,
+I21,Effector lobe,a1,,,,,,29.03,Yes,Yes,Yes,Yes
+Q22,Effector lobe,a1,,,,,,11.1,,,,
+L23,Effector lobe,a1,,,,,,6.84,,,Yes,
+I24,Effector lobe,a1,,,,,,24.7,,,Yes,Yes
+Q25,Effector lobe,,,,,,,98.41,Yes,Yes,Yes,Yes
+N26,Effector lobe,,,,,,,92.16,,,Yes,Yes
+H27,Effector lobe,,,,,,,93.4,,,,Yes
+F28,Effector lobe,,G2/Switch 1,,,,,70.29,,,,
+V29,Effector lobe,,G2/Switch 1,,,,,38.88,,,Yes,
+D30,Effector lobe,,G2/Switch 1,,,,,113.26,,,,Yes
+E31,Effector lobe,,G2/Switch 1,,,,,88.59,Yes,,Yes,Yes
+Y32,Effector lobe,,G2/Switch 1,,,,,161.64,Yes,,,Yes
+D33,Effector lobe,,G2/Switch 1,,,,,117.19,Yes,Yes,Yes,Yes
+P34,Effector lobe,,G2/Switch 1,,,,Phosphorylation,70.76,Yes,,,Yes
+T35,Effector lobe,,G2/Switch 1,,,,Glycosylation,25.75,,,,Yes
+I36,Effector lobe,,G2/Switch 1,,,,,166.77,Yes,Yes,Yes,Yes
+E37,Effector lobe,,G2/Switch 1,p1 pocket,,,,51.66,Yes,Yes,Yes,Yes
+D38,Effector lobe,B2,G2/Switch 1,p1 pocket,,,,62.95,Yes,Yes,Yes,Yes
+S39,Effector lobe,B2,,p1 pocket,,,,84.46,Yes,Yes,Yes,Yes
+Y40,Effector lobe,B2,,,,,,34.98,Yes,Yes,Yes,Yes
+R41,Effector lobe,B2,,,,,ADP_ribosylation,137.38,Yes,Yes,Yes,Yes
+K42,Effector lobe,B2,,,,,Sumoylation,67.28,,,Yes,Yes
+Q43,Effector lobe,B2,,,,,,112.8,,,Yes,Yes
+V44,Effector lobe,B2,,,,,,19.31,,,Yes,Yes
+V45,Effector lobe,B2,,,,,,90.68,,,Yes,Yes
+I46,Effector lobe,B2,,,,,,0.67,,,Yes,
+D47,Effector lobe,,,,,,,99.42,,,Yes,
+G48,Effector lobe,,,,,,,69.31,,,Yes,
+E49,Effector lobe,B3,,,,,,45.3,,,,
+T50,Effector lobe,B3,,,,,,66.79,,,Yes,Yes
+C51,Effector lobe,B3,,,,,,0,,,,
+L52,Effector lobe,B3,,,,,,20.73,,,,
+L53,Effector lobe,B3,,p1 pocket,,,,0.34,,,,
+D54,Effector lobe,B3,,p1 pocket,,S1/2 pocket,,39.2,,,,Yes
+I55,Effector lobe,B3,,p1 pocket,,,,0.47,,,,Yes
+L56,Effector lobe,B3,,p1 pocket,,S1/2 pocket,,45.21,,,Yes,Yes
+D57,Effector lobe,B3,,,,,,0,,,,Yes
+T58,Effector lobe,,,,,,,21.68,,,,
+A59,Effector lobe,,G3/Switch 2,,,,,57.9,,,,Yes
+G60,Effector lobe,,G3/Switch 2,,,,,30.26,,,,Yes
+Q61,Effector lobe,,G3/Switch 2,,,,,110.81,Yes,,,Yes
+E62,Effector lobe,,G3/Switch 2,,S2 pocket,,,NA,Yes,,,
+E63,Effector lobe,,G3/Switch 2,,,,,NA,Yes,,,Yes
+Y64,Effector lobe,,G3/Switch 2,,,,Phosphorylation,NA,Yes,Yes,,Yes
+S65,Effector lobe,,G3/Switch 2,,,,,NA,,,,Yes
+A66,Effector lobe,a2,G3/Switch 2,,,,,NA,,,,Yes
+M67,Effector lobe,a2,G3/Switch 2,p1 pocket,,,,NA,Yes,,,Yes
+R68,Effector lobe,a2,G3/Switch 2,,S2 pocket,,,NA,,,,
+D69,Effector lobe,a2,G3/Switch 2,,,,,NA,,,,Yes
+Q70,Effector lobe,a2,G3/Switch 2,p1 pocket,,,,151.39,,,,Yes
+Y71,Effector lobe,a2,G3/Switch 2,p1 pocket,,S1/2 pocket,,24.03,,,,Yes
+M72,Effector lobe,a2,G3/Switch 2,p1 pocket,S2 pocket,,,28.35,,,,
+R73,Effector lobe,a2,G3/Switch 2,p1 pocket,,,,167.33,,Yes,,Yes
+T74,Effector lobe,a2,G3/Switch 2,p1 pocket,,S1/2 pocket,,75.81,,,,
+G75,Effector lobe,,G3/Switch 2,p1 pocket,,,,1.59,,,,
+E76,Effector lobe,,,,,,,55.72,,,,
+G77,Effector lobe,B4,,,,,,0,,,,
+F78,Effector lobe,B4,,,,,,0,,,,
+L79,Effector lobe,B4,,,,,,0.33,,,,
+C80,Effector lobe,B4,,,,,,1.16,,,,
+V81,Effector lobe,B4,,,,,,0,,,,
+F82,Effector lobe,B4,,,,,,0.31,,,,
+A83,Effector lobe,B4,,,,,,0.5,,,,
+I84,Effector lobe,,,,,,,1.17,,,,
+N85,Effector lobe,,,,,,,48.87,,,,
+N86,Effector lobe,,,,,,,49.29,,,,
+T87,Allosteric lobe,a3,,,,,,59.91,,,,
+K88,Allosteric lobe,a3,,,,,,136.62,Yes,,,
+S89,Allosteric lobe,a3,,,,,,1.09,,,,
+F90,Allosteric lobe,a3,,,,,,22.35,,,,
+E91,Allosteric lobe,a3,,,,,,107.41,,,,
+D92,Allosteric lobe,a3,,,,,,32.99,,,,
+I93,Allosteric lobe,a3,,,,,,1.51,,,,
+H94,Allosteric lobe,a3,,,,,,97.94,,,,
+H95,Allosteric lobe,a3,,,S2 pocket,,,86.47,,,,
+Y96,Allosteric lobe,a3,,,S2 pocket,,,10.16,,,,
+R97,Allosteric lobe,a3,,,,,,27.02,,,,
+E98,Allosteric lobe,a3,,,,,,60.27,,,,
+Q99,Allosteric lobe,a3,,,,,,61.28,,,,
+I100,Allosteric lobe,a3,,,,,,0,,,,
+K101,Allosteric lobe,a3,,,,,,26.48,,,,
+R102,Allosteric lobe,a3,,,,,,175.76,,,,Yes
+V103,Allosteric lobe,a3,,,,,,68.44,,,,Yes
+K104,Allosteric lobe,a3,,,,,Acetylation,57.26,,,,
+D105,Allosteric lobe,,,,,,,126.67,,,,
+S106,Allosteric lobe,,,,,,,48.91,,,,
+E107,Allosteric lobe,,,,,,,131.61,,,,
+D108,Allosteric lobe,,,,,,,92.37,,,,
+V109,Allosteric lobe,,,,,,,13.16,,,,
+P110,Allosteric lobe,,,,,,,13.57,,,,
+M111,Allosteric lobe,B5,,,,,,6.75,,,,
+V112,Allosteric lobe,B5,,,,,,0,,,,
+L113,Allosteric lobe,B5,,,,,,0.17,,,,
+V114,Allosteric lobe,B5,,,,,,0,,,,
+G115,Allosteric lobe,B5,,,,,,0,,,,
+N116,Allosteric lobe,B5,G4,,,,,1.89,,,,
+K117,Allosteric lobe,,G4,,,,Ubiquitination,54.72,,,,
+C118,Allosteric lobe,,G4,,,,Nitrosylation,28.08,,,,
+D119,Allosteric lobe,,G4,,,,,53.2,,,,
+L120,Allosteric lobe,,,,,,,64.21,,,,
+P121,Allosteric lobe,,,,,,,130.23,,,,
+S122,Allosteric lobe,,,,,,,68.34,,,,
+R123,Allosteric lobe,,,,,,,89.14,,,,
+T124,Allosteric lobe,,,,,,,84.81,,,,
+V125,Allosteric lobe,,,,,,,1.34,,,,
+D126,Allosteric lobe,,,,,,,76.17,,,,
+T127,Allosteric lobe,a4,,,,,,52.06,,,,
+K128,Allosteric lobe,a4,,,,,,62.12,,,,
+Q129,Allosteric lobe,a4,,,,,,82.02,,,,
+A130,Allosteric lobe,a4,,,,,,1,,,,
+Q131,Allosteric lobe,a4,,,,,,94.89,,,,
+D132,Allosteric lobe,a4,,,,,,99.67,,,,
+L133,Allosteric lobe,a4,,,,,,42.76,,,,
+A134,Allosteric lobe,a4,,,,,,3.64,,,,
+R135,Allosteric lobe,a4,,,,,,78.58,,,,
+S136,Allosteric lobe,a4,,,,,,93.24,,,,
+Y137,Allosteric lobe,a4,,,,,,31.68,,,,
+G138,Allosteric lobe,,,,,,,63.66,,,,
+I139,Allosteric lobe,,,,,,,25.82,,,,
+P140,Allosteric lobe,B6,,,,,,32.22,,,,
+F141,Allosteric lobe,B6,,,,,,37.14,,,,
+I142,Allosteric lobe,B6,,,,,,25.94,,,,
+E143,Allosteric lobe,B6,,,,,,35.52,,,,
+T144,Allosteric lobe,B6,G5,,,,,0,,,,
+S145,Allosteric lobe,,G5,,,,,0.34,,,,
+A146,Allosteric lobe,,G5,,,,,3.49,,,,
+K147,Allosteric lobe,,G5,,,,Ubiquitination,120.56,,,,
+T148,Allosteric lobe,,,,,,,83.56,,,,
+R149,Allosteric lobe,,,,,,,66.43,,,Yes,Yes
+Q150,Allosteric lobe,,,,,,,99.19,,,,
+G151,Allosteric lobe,,,,,,,18.93,,,,
+V152,Allosteric lobe,a5,,,,,,0.14,,,,
+D153,Allosteric lobe,a5,,,,,,51.54,,,Yes,
+D154,Allosteric lobe,a5,,,,,,69.03,,,,
+A155,Allosteric lobe,a5,,,,,,0.34,,,,
+F156,Allosteric lobe,a5,,,,,,0.16,,,,
+Y157,Allosteric lobe,a5,,,,,,43.39,,,Yes,
+T158,Allosteric lobe,a5,,,,,,17.72,,,,
+L159,Allosteric lobe,a5,,,,,,0,,,,
+V160,Allosteric lobe,a5,,,,,,0,,,,
+R161,Allosteric lobe,a5,,,,,,81.72,,,,
+E162,Allosteric lobe,a5,,,,,,35.81,,,,
+I163,Allosteric lobe,a5,,,,,,2.35,,,,
+R164,Allosteric lobe,a5,,,,,,40.29,,,,
+K165,Allosteric lobe,a5,,,,,,137.36,,,,
+H166,Allosteric lobe,a5,,,,,,93.68,,,,
+K167,HVR,,,,,,,119.94,,,,
+E168,HVR,,,,,,,168.99,,,,
+K169,HVR,,,,,,,NA,,,,
+M170,HVR,,,,,,,NA,,,,
+S171,HVR,,,,,,,NA,,,,
+K172,HVR,,,,,,,NA,,,,
+D173,HVR,,,,,,,NA,,,,
+G174,HVR,,,,,,,NA,,,,
+K175,HVR,,,,,,,NA,,,,
+K176,HVR,,,,,,,NA,,,,
+K177,HVR,,,,,,,NA,,,,
+K178,HVR,,,,,,,NA,,,,
+K179,HVR,,,,,,,NA,,,,
+K180,HVR,,,,,,,NA,,,,
+S181,HVR,,,,,,Phosphorylation,NA,,,,
+K182,HVR,,,,,,,NA,,,,
+T183,HVR,,,,,,,NA,,,,
+K184,HVR,,,,,,,NA,,,,
+C185,HVR,,CAAX,,,,Farnesylation,NA,,,,
+V186,HVR,,CAAX,,,,,NA,,,,
+I187,HVR,,CAAX,,,,,NA,,,,
+M188,HVR,,CAAX,,,,,NA,,,,

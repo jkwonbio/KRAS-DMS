@@ -1,0 +1,1 @@
+sequence downloaded at: https://useast.ensembl.org/Homo_sapiens/Transcript/Exons?db=core;g=ENSG00000133703;r=12:25205246-25250936;t=ENST00000311936
